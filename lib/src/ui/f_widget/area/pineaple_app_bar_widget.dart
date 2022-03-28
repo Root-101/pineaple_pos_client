@@ -52,6 +52,7 @@ class PineapleAppBarWidget {
           ),
           maxLines: 1,
         ),
+        titlePadding: EdgeInsets.zero,
         centerTitle: true,
         collapseMode: CollapseMode.pin,
         background: Container(
