@@ -1,7 +1,7 @@
 name: pineaple_pos_client
 description: Point of Sale
 
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
 version: 0.0.1-SNAPSHOT.20220322
 
@@ -19,6 +19,11 @@ dependencies:
   get: ^4.5.1
   clean_core: ^1.2.3-RELEASE.20220206
 
+  #Animations
+  sliver_fab:
+    git:
+      url: https://github.com/JesusHdezWaterloo/sliver_fab
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -26,5 +31,8 @@ dev_dependencies:
   flutter_lints: ^1.0.0
 
 flutter:
+  assets:
+    #Images
+    - packages/pineaple_pos_client/assets/images/area_image.png
 
   uses-material-design: true
