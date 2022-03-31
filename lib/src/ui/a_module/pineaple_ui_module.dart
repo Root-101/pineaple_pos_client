@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:pineaple_pos_client/pineaple_exporter.dart';
 
 class PineapleUIModule {
@@ -8,4 +9,9 @@ class PineapleUIModule {
   static Color TILE_COLOR = Color(0xff5fb4f7);
   static const String URL_AREA_BACKGROUND = PineapleAssets.AREA_IMAGE;
   static const IconData ICON_AREA = Icons.restaurant_menu_outlined;
+
+  static Future init() async {
+    await PineapleCoreModule.init();
+    Get.put<PineapleAreaController>(PineapleAreaControllerImpl());
+  }
 }
