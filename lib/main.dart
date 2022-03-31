@@ -2,9 +2,39 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pineaple_pos_client/pineaple_exporter.dart';
 
-void main() => runApp(
-      const MyApp(),
+void main() {
+  runApp(
+    SplashScreen(),
+  );
+}
+
+class SplashScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: Init.instance.initialize(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        } else {
+          return const MyApp();
+        }
+      },
     );
+  }
+}
+
+class Init {
+  Init._();
+
+  static final instance = Init._();
+
+  Future initialize() async {
+    await PineapleUIModule.init();
+  }
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
