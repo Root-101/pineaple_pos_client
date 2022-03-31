@@ -18,8 +18,10 @@ dependencies:
   # Architecture & Management
   get: ^4.5.1
   clean_core: ^1.2.3-RELEASE.20220206
+  auto_size_text: ^3.0.0
 
   #Animations
+  animations: ^2.0.2
   sliver_fab:
     git:
       url: https://github.com/JesusHdezWaterloo/sliver_fab
@@ -31,6 +33,20 @@ dev_dependencies:
   flutter_lints: ^1.0.0
 
 flutter:
+  fonts:
+    - family: Lobster
+      fonts:
+        - asset: assets/fonts/Lobster-Regular.ttf
+          weight: 400
+    - family: AkayaTelivigala
+      fonts:
+        - asset: assets/fonts/AkayaTelivigala-Regular.ttf
+          weight: 400
+    - family: RobotoSlab
+      fonts:
+        - asset: assets/fonts/RobotoSlab-Variable.ttf
+          weight: 400
+
   assets:
     #Images
     - packages/pineaple_pos_client/assets/images/area_image.png
