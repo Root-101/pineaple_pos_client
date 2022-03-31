@@ -64,10 +64,11 @@ class MyApp extends StatelessWidget {
       visualDensity: VisualDensity.adaptivePlatformDensity,
 
       // Define the default brightness and colors.
-      colorScheme: const ColorScheme.dark(
-        brightness: Brightness.dark,
-        primary: Color(0xff00a4db),
-        secondary: Color(0xff002edb),
+      colorScheme: const ColorScheme.light(
+        brightness: Brightness.light,
+        primary: Color(0xff63ced4),
+        secondary: Color(0xff63ced4),
+        background: Color(0xffafefef),
       ),
 
       // Define the default font family.
