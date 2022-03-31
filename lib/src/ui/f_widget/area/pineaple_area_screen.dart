@@ -6,7 +6,9 @@ class PineapleAreaScreen extends StatefulWidget {
 // ignore: constant_identifier_names
   static const ROUTE_NAME = "/pineaple-area-screen";
 
-  const PineapleAreaScreen({Key? key}) : super(key: key);
+  const PineapleAreaScreen({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<PineapleAreaScreen> createState() => _PineapleAreaScreenState();
@@ -33,18 +35,32 @@ class _PineapleAreaScreenState extends State<PineapleAreaScreen> {
           slivers: <Widget>[
             // This builds the sliver app bar.
             PineapleAppBarWidget.buildAppBar(
-              backgroundColor: PineapleUIModule.PRIMARY_COLOR,
+              backgroundColor: PineapleUIModule.SECONDARY_COLOR,
               title: PineapleUIModule.MODULE_NAME,
-              urlBackgroundImage: PineapleUIModule.URL_MODULE_BACKGROUND,
+              urlBackgroundImage: PineapleUIModule.URL_AREA_BACKGROUND,
             ),
-            SliverList(
-              delegate: SliverChildListDelegate(
-                List.generate(
-                  30,
-                  (int index) => ListTile(title: Text("Item $index")),
-                ),
-              ),
-            ),
+            SliverGrid.count(
+              // Amount of columns.
+              crossAxisCount: 2,
+              // Space beteween the items.
+              crossAxisSpacing: 5,
+              mainAxisSpacing: 5,
+              // The tiles.
+              children: [
+                ..._controller
+                    .findAll()
+                    .map(
+                        (e) => Function.apply(((PineapleAreaDomain areaDomain) {
+                              PineapleAreaTile(
+                                singleLevelDomain: areaDomain,
+                                buildName: areaDomain.name,
+                                colorPrimary: PineapleUIModule.TILE_COLOR,
+                                openWidget: Text('data'),
+                              );
+                            }), [e]) as Widget)
+                    .toList(),
+              ],
+            )
           ],
         );
       }),
