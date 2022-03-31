@@ -1,19 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:pineaple_pos_client/pineaple_exporter.dart';
 import 'package:sliver_fab/sliver_fab.dart';
 
-class PineapleAreaScreen extends StatefulWidget {
+class PineapleAreaScreen extends GetView<PineapleAreaController> {
 // ignore: constant_identifier_names
   static const ROUTE_NAME = "/pineaple-area-screen";
 
-  const PineapleAreaScreen({Key? key}) : super(key: key);
-
-  @override
-  State<PineapleAreaScreen> createState() => _PineapleAreaScreenState();
-}
-
-class _PineapleAreaScreenState extends State<PineapleAreaScreen> {
-  late final PineapleAreaController _controller;
+  const PineapleAreaScreen({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +19,7 @@ class _PineapleAreaScreenState extends State<PineapleAreaScreen> {
     double expandedHeight = deviceSize.height * 0.3;
 
     return Scaffold(
+      backgroundColor: Get.theme.colorScheme.background,
       body: Builder(builder: (context) {
         return SliverFab(
           // FloatingActionButton placed on the edge of FlexibleAppBar and rest of view.
@@ -33,18 +30,29 @@ class _PineapleAreaScreenState extends State<PineapleAreaScreen> {
           slivers: <Widget>[
             // This builds the sliver app bar.
             PineapleAppBarWidget.buildAppBar(
-              backgroundColor: PineapleUIModule.PRIMARY_COLOR,
+              backgroundColor: Get.theme.colorScheme.secondary,
               title: PineapleUIModule.MODULE_NAME,
-              urlBackgroundImage: PineapleUIModule.URL_MODULE_BACKGROUND,
+              urlBackgroundImage: PineapleUIModule.URL_AREA_BACKGROUND,
             ),
-            SliverList(
-              delegate: SliverChildListDelegate(
-                List.generate(
-                  30,
-                  (int index) => ListTile(title: Text("Item $index")),
-                ),
-              ),
-            ),
+            SliverGrid.count(
+              // Amount of columns.
+              crossAxisCount: 2,
+              // Space beteween the items.
+              crossAxisSpacing: 5,
+              mainAxisSpacing: 5,
+              // The tiles.
+              children: controller
+                  .findAll()
+                  .map(
+                    (areaDomain) => PineapleAreaTile(
+                      singleLevelDomain: areaDomain,
+                      buildName: areaDomain.name,
+                      colorPrimary: Get.theme.colorScheme.primary,
+                      openWidget: const Text('data'),
+                    ),
+                  )
+                  .toList(),
+            )
           ],
         );
       }),

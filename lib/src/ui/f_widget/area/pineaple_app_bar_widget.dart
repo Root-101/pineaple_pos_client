@@ -48,11 +48,11 @@ class PineapleAppBarWidget {
         title: Text(
           title,
           style: Get.theme.textTheme.headline5?.copyWith(
-            fontSize: Get.size.width / 15,
+            fontSize: Get.size.width / 16,
           ),
           maxLines: 1,
         ),
-        titlePadding: EdgeInsets.zero,
+      ///  titlePadding: EdgeInsets.zero,
         centerTitle: true,
         collapseMode: CollapseMode.pin,
         background: Container(
