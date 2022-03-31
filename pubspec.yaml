@@ -49,6 +49,6 @@ flutter:
 
   assets:
     #Images
-    - packages/pineaple_pos_client/assets/images/area_image.png
+    - packages/pineaple_pos_client/assets/images/area_image.jpg
 
   uses-material-design: true

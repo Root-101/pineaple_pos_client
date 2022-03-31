@@ -4,5 +4,5 @@ class PineapleAssets {
   static const _images = "$_assets/images";
 
   // ignore: constant_identifier_names
-  static const String AREA_IMAGE = "$_images/area_image.png";
+  static const String AREA_IMAGE = "$_images/area_image.jpg";
 }
