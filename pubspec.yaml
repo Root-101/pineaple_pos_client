@@ -22,9 +22,7 @@ dependencies:
 
   #Animations
   animations: ^2.0.2
-  sliver_fab:
-    git:
-      url: https://github.com/JesusHdezWaterloo/sliver_fab
+  pull_to_refresh: ^2.0.0
 
 dev_dependencies:
   flutter_test:
