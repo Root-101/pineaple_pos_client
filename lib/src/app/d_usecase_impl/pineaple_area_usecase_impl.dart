@@ -1,35 +1,9 @@
-import 'package:pineaple_pos_client/src/app/b_domain/pineaple_area_domain.dart';
-import 'package:pineaple_pos_client/src/app/c_usecase_def/pineaple_area_usecase.dart';
+import 'package:clean_core/clean_core.dart';
+import 'package:pineaple_pos_client/pineaple_exporter.dart';
 
-class PineapleAreaUseCaseImpl implements PineapleAreaUseCase {
-  @override
-  int count() {
-    // TODO: implement count
-    throw UnimplementedError();
-  }
-
-  @override
-  PineapleAreaDomain create(PineapleAreaDomain newObject) {
-    // TODO: implement create
-    throw UnimplementedError();
-  }
-
-  @override
-  PineapleAreaDomain destroy(PineapleAreaDomain objectToDestroy) {
-    // TODO: implement destroy
-    throw UnimplementedError();
-  }
-
-  @override
-  void dispose() {
-    // TODO: implement dispose
-  }
-
-  @override
-  PineapleAreaDomain edit(PineapleAreaDomain objectToEdit) {
-    // TODO: implement edit
-    throw UnimplementedError();
-  }
+class PineapleAreaUseCaseImpl extends DefaultCRUDUseCase<PineapleAreaDomain>
+    implements PineapleAreaUseCase {
+  PineapleAreaUseCaseImpl(PineapleAreaRepo repo) : super(repo: repo);
 
   @override
   List<PineapleAreaDomain> findAll() {
@@ -44,16 +18,5 @@ class PineapleAreaUseCaseImpl implements PineapleAreaUseCase {
       PineapleAreaDomain(id: 8, name: "Mesa 8"),
       PineapleAreaDomain(id: 9, name: "Barra"),
     ];
-  }
-
-  @override
-  PineapleAreaDomain findBy(int keyId) {
-    // TODO: implement findBy
-    throw UnimplementedError();
-  }
-
-  @override
-  void init() {
-    // TODO: implement init
   }
 }

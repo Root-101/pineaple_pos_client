@@ -10,8 +10,15 @@ class PineapleUIModule {
   static const String URL_AREA_BACKGROUND = PineapleAssets.AREA_IMAGE;
   static const IconData ICON_AREA = Icons.restaurant_menu_outlined;
 
-  static Future init() async {
+  static Future<bool> init() async {
     await PineapleCoreModule.init();
-    Get.put<PineapleAreaController>(PineapleAreaControllerImpl());
+
+    Get.put<PineapleAreaController>(
+      PineapleAreaControllerImpl(
+        areaUseCase: Get.find<PineapleAreaUseCase>(),
+      ),
+    );
+
+    return true;
   }
 }
