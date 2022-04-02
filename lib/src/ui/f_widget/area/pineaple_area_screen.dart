@@ -53,7 +53,7 @@ class PineapleAreaScreen extends GetView<PineapleAreaController> {
           // Header indicator displace before content.
           header: WaterDropMaterialHeader(
             // The color of the header.
-            backgroundColor: Get.theme.colorScheme.primary,
+            backgroundColor: Get.theme.colorScheme.secondary,
             // To prevent the view get out from the sliver app bar.
             offset: -5,
           ),
