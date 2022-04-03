@@ -63,4 +63,9 @@ class PineaplePOSUseCaseImpl implements PineaplePOSUseCase {
   void init() {
     // TODO: implement init
   }
+
+  @override
+  List<PineaplePOSDomain> findByArea(int areaID) {
+    return findAll().where((element) => element.area.id == areaID).toList();
+  }
 }
