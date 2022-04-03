@@ -6,9 +6,6 @@ abstract class PineapleAreaController extends GetxController {
   /// Find all the areas.
   List<PineapleAreaDomain> findAll();
 
-  /// Get all the points of sell that belong to an specific area.
-  List<PineaplePOSDomain> posList(int areaID);
-
   /// The controller of the refresh widget.
   RefreshController get refreshController;
 
