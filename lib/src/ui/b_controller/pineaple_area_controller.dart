@@ -3,6 +3,7 @@ import 'package:pineaple_pos_client/pineaple_exporter.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 abstract class PineapleAreaController extends GetxController {
+  /// Find all the areas.
   List<PineapleAreaDomain> findAll();
 
   /// The controller of the refresh widget.

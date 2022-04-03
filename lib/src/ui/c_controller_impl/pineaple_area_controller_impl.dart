@@ -10,6 +10,7 @@ class PineapleAreaControllerImpl extends PineapleAreaController {
     initialRefresh: false,
   );
 
+  /// Find all the areas.
   @override
   List<PineapleAreaDomain> findAll() {
     return areaUseCase.findAll();

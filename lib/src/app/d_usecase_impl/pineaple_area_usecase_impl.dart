@@ -1,11 +1,10 @@
-import 'package:pineaple_pos_client/src/app/b_domain/pineaple_area_domain.dart';
+import 'package:pineaple_pos_client/src/app/b_domain/pineaple_domain_exporter.dart';
 import 'package:pineaple_pos_client/src/app/c_usecase_def/pineaple_area_usecase.dart';
 
 class PineapleAreaUseCaseImpl implements PineapleAreaUseCase {
   @override
   int count() {
-    // TODO: implement count
-    throw UnimplementedError();
+    return findAll().length;
   }
 
   @override
@@ -34,22 +33,16 @@ class PineapleAreaUseCaseImpl implements PineapleAreaUseCase {
   @override
   List<PineapleAreaDomain> findAll() {
     return [
-      PineapleAreaDomain(id: 1, name: "Mesa 1"),
-      PineapleAreaDomain(id: 2, name: "Mesa 2"),
-      PineapleAreaDomain(id: 3, name: "Mesa 3"),
-      PineapleAreaDomain(id: 4, name: "Mesa 4"),
-      PineapleAreaDomain(id: 5, name: "Mesa 5"),
-      PineapleAreaDomain(id: 6, name: "Mesa 6"),
-      PineapleAreaDomain(id: 7, name: "Mesa 7"),
-      PineapleAreaDomain(id: 8, name: "Mesa 8"),
-      PineapleAreaDomain(id: 9, name: "Barra"),
+      PineapleAreaDomain(id: 1, name: "Lobby"),
+      PineapleAreaDomain(id: 2, name: "Bar"),
+      PineapleAreaDomain(id: 3, name: "Mostrador"),
+      PineapleAreaDomain(id: 4, name: "Platea"),
     ];
   }
 
   @override
   PineapleAreaDomain findBy(int keyId) {
-    // TODO: implement findBy
-    throw UnimplementedError();
+    return findAll().firstWhere((element) => element.id == keyId);
   }
 
   @override

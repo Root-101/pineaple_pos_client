@@ -1,4 +1,5 @@
 import 'package:clean_core/clean_core.dart';
+
 class PineapleAreaDomain extends BasicDomainObject<PineapleAreaDomain> {
   @override
   int id;
