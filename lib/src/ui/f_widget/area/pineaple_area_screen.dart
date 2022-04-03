@@ -100,11 +100,17 @@ class PineapleAreaScreen extends GetView<PineapleAreaController> {
   /// Tile when the list is refreshing.
   _buildTileRefresh() {
     return Transform.translate(
+      // So the tiles beggin in the same spot that the real list.
       offset: const Offset(0.0, -25.0),
+      // Widget that make the shimer efect.
       child: Shimmer.fromColors(
+        // Color of the tile.
         baseColor: Colors.grey.shade300,
+        // Color of the shime efect.
         highlightColor: Get.theme.colorScheme.primary,
+        // If the shimer efect is showing.
         enabled: controller.isRefreshing,
+        // The Grid.
         child: GridView.count(
           // Amount of columns.
           crossAxisCount: 2,
