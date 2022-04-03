@@ -1,13 +1,13 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 
-class PineapleAreaTile<PineapleAreaDomain> extends StatelessWidget {
+class PineapleOpenContainerWidget<PineapleAreaDomain> extends StatelessWidget {
   final Widget closeWidget;
   final Widget openWidget;
 
   final Color colorPrimary;
 
-  const PineapleAreaTile({
+  const PineapleOpenContainerWidget({
     required this.closeWidget,
     required this.openWidget,
     this.colorPrimary = Colors.white,
@@ -26,21 +26,13 @@ class PineapleAreaTile<PineapleAreaDomain> extends StatelessWidget {
         closedShape: closedShape,
         transitionDuration: const Duration(milliseconds: 500),
         transitionType: ContainerTransitionType.fadeThrough,
-        closedBuilder: (context, action) => _buildClosed(),
-        openBuilder: (context, action) => _buildOpen(),
+        // Tile when is small that shows a list with all the different areas.
+        closedBuilder: (context, action) => closeWidget,
+        // The screen to show when the user select one of the small tiles.
+        openBuilder: (context, action) => openWidget,
         closedColor: colorPrimary,
         middleColor: colorPrimary,
       ),
     );
-  }
-
-  // Tile when is small that shows a list with all the different areas.
-  _buildClosed() {
-    return closeWidget;
-  }
-
-  // The screen to show when the user select one of the small tiles.
-  _buildOpen() {
-    return openWidget;
   }
 }
