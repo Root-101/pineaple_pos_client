@@ -4,8 +4,7 @@ import 'package:pineaple_pos_client/src/app/c_usecase_def/pineaple_area_usecase.
 class PineapleAreaUseCaseImpl implements PineapleAreaUseCase {
   @override
   int count() {
-    // TODO: implement count
-    throw UnimplementedError();
+    return findAll().length;
   }
 
   @override
@@ -60,8 +59,7 @@ class PineapleAreaUseCaseImpl implements PineapleAreaUseCase {
 
   @override
   PineapleAreaDomain findBy(int keyId) {
-    // TODO: implement findBy
-    throw UnimplementedError();
+    return findAll().firstWhere((element) => element.id == keyId);
   }
 
   @override
