@@ -33,38 +33,16 @@ class PineapleAreaUseCaseImpl implements PineapleAreaUseCase {
   @override
   List<PineapleAreaDomain> findAll() {
     return [
-      PineapleAreaDomain(id: 1, name: "Lobby", posList: [
-        PineaplePOSDomain(id: 1, name: "Mesa 1"),
-        PineaplePOSDomain(id: 2, name: "Mesa 2"),
-        PineaplePOSDomain(id: 3, name: "Mesa 3"),
-        PineaplePOSDomain(id: 4, name: "Mesa 4"),
-      ]),
-      PineapleAreaDomain(id: 2, name: "Bar", posList: [
-        PineaplePOSDomain(id: 5, name: "Barra"),
-      ]),
-      PineapleAreaDomain(id: 3, name: "Mostrador", posList: [
-        PineaplePOSDomain(id: 6, name: "Mesa 1"),
-        PineaplePOSDomain(id: 7, name: "Mesa 2"),
-      ]),
-      PineapleAreaDomain(id: 4, name: "Platea", posList: [
-        PineaplePOSDomain(id: 8, name: "Mesa 1"),
-        PineaplePOSDomain(id: 9, name: "Mesa 2"),
-        PineaplePOSDomain(id: 10, name: "Mesa 3"),
-        PineaplePOSDomain(id: 11, name: "Mesa 4"),
-        PineaplePOSDomain(id: 12, name: "Mesa 5"),
-        PineaplePOSDomain(id: 13, name: "Mesa 6"),
-      ]),
+      PineapleAreaDomain(id: 1, name: "Lobby"),
+      PineapleAreaDomain(id: 2, name: "Bar"),
+      PineapleAreaDomain(id: 3, name: "Mostrador"),
+      PineapleAreaDomain(id: 4, name: "Platea"),
     ];
   }
 
   @override
   PineapleAreaDomain findBy(int keyId) {
     return findAll().firstWhere((element) => element.id == keyId);
-  }
-
-  @override
-  List<PineaplePOSDomain> posList(int areaID) {
-    return findBy(areaID).posList;
   }
 
   @override
