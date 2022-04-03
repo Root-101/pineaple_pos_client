@@ -47,7 +47,7 @@ class PineapleAreaScreen extends GetView<PineapleAreaController> {
                     (areaDomain) => PineapleOpenContainerWidget(
                       closeWidget: _buildTileClosed(areaDomain.name),
                       colorPrimary: Get.theme.colorScheme.primary,
-                      openWidget: _buildTileOpen(),
+                      openWidget: _buildTileOpen(areaDomain.id),
                     ),
                   )
                   .toList(),
@@ -79,7 +79,10 @@ class PineapleAreaScreen extends GetView<PineapleAreaController> {
   }
 
   /// The screen to show when the user select one of the small tiles.
-  _buildTileOpen() {
-    return Container();
+  _buildTileOpen(int areaID) {
+    return PineaplePOSScreen(
+      areaList: controller.findAll(),
+      areaID: areaID,
+    );
   }
 }
