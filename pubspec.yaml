@@ -17,7 +17,9 @@ dependencies:
 
   # Architecture & Management
   get: ^4.5.1
-  clean_core: ^1.2.3-RELEASE.20220206
+  clean_core:
+    path: ../../clean-core-flutter
+  #clean_core: ^1.2.3-RELEASE.20220206
   auto_size_text: ^3.0.0
 
   #Animations

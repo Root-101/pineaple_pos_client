@@ -2,7 +2,7 @@ import 'package:clean_core/clean_core.dart';
 import 'package:pineaple_pos_client/pineaple_exporter.dart';
 
 class PineapleAreaRepoImpl
-    extends DefaultCRUDRepo<PineapleAreaDomain, PineapleAreaEntity>
+    extends DefaultCRUDRepoAsync<PineapleAreaDomain, PineapleAreaEntity>
     implements PineapleAreaRepo {
   PineapleAreaRepoExternal _externalRepo;
 
@@ -14,7 +14,7 @@ class PineapleAreaRepoImpl
 }
 
 class PineapleAreaConverter
-    extends DefaultGeneralConverter<PineapleAreaDomain, PineapleAreaEntity> {
+    extends GeneralConverter<PineapleAreaDomain, PineapleAreaEntity> {
   static final PineapleAreaConverter converter = PineapleAreaConverter._();
 
   PineapleAreaConverter._();

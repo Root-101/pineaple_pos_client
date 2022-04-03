@@ -6,7 +6,7 @@ class PineapleAreaControllerImpl extends PineapleAreaController {
   PineapleAreaControllerImpl({required this.areaUseCase});
 
   @override
-  List<PineapleAreaDomain> findAll() {
-    return areaUseCase.findAll();
+  Future<List<PineapleAreaDomain>> findAll() async {
+    return await areaUseCase.findAll();
   }
 }
