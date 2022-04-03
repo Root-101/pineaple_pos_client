@@ -2,8 +2,6 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pineaple_pos_client/pineaple_exporter.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:shimmer/shimmer.dart';
 
 class PineapleAreaScreen extends GetView<PineapleAreaController> {
 // ignore: constant_identifier_names
@@ -16,7 +14,7 @@ class PineapleAreaScreen extends GetView<PineapleAreaController> {
   @override
   Widget build(BuildContext context) {
     // A key for the refresh Widget.
-    GlobalKey _refresherKey = GlobalKey();
+    GlobalKey _refreshAreaKey = GlobalKey();
 
     return Scaffold(
       // The background color of the screen.
@@ -30,37 +28,29 @@ class PineapleAreaScreen extends GetView<PineapleAreaController> {
         // Creates a widget to help attach the refresh and load of the content of the app.
         body: GetBuilder<PineapleAreaController>(builder: (_) {
           // Creates a widget that absorbs pointers during hit testing.
-          return AbsorbPointer(
-            // Don't allow the user to press any widget while this property is in true.
-            absorbing: controller.isRefreshing,
-            child: SmartRefresher(
-              // The key of the widget.
-              key: _refresherKey,
-              // Controll the inner state.
-              controller: controller.refreshController,
-              // This bool will affect whether or not to have the function of drop-down refresh.
-              enablePullDown: true,
-              // Header indicator displace before content.
-              header: WaterDropMaterialHeader(
-                // The color of the header.
-                backgroundColor: Get.theme.colorScheme.primary,
-                // To prevent the view get out from the sliver app bar.
-                offset: -5,
-              ),
-              // Builds the child to refresh in this case a grid view.
-              child: controller.isRefreshing
-                  ? _buildTileRefresh()
-                  : _buildGridView(),
-              physics: const BouncingScrollPhysics(),
-              // Footer indicator display after content.
-              footer: const ClassicFooter(
-                loadStyle: LoadStyle.ShowWhenLoading,
-                completeDuration: Duration(milliseconds: 500),
-              ),
-              // Callback when header refresh.
-              onRefresh: controller.onRefresh,
-              // Callback when footer loading more data.
-              onLoading: controller.onLoading,
+          return PineapleRefreshWidget.buildRefreshWidget(
+            refreshKey: _refreshAreaKey,
+            isRefreshing: controller.isRefreshing,
+            refreshController: controller.refreshController,
+            onRefresh: controller.onRefresh,
+            onLoading: controller.onLoading,
+            waterDropColor: Get.theme.colorScheme.primary,
+            gridShimmer: PineapleRefreshWidget.buildShimmerGrid(
+              isRefreshing: controller.isRefreshing,
+              baseColor: Colors.grey.shade300,
+              highlightColor: Get.theme.colorScheme.primary,
+            ),
+            gridView: PineapleRefreshWidget.buildGridView(
+              children: controller
+                  .findAll()
+                  .map(
+                    (areaDomain) => PineapleOpenContainerWidget(
+                      closeWidget: _buildTileClosed(areaDomain.name),
+                      colorPrimary: Get.theme.colorScheme.primary,
+                      openWidget: _buildTileOpen(),
+                    ),
+                  )
+                  .toList(),
             ),
           );
         }),
@@ -68,65 +58,12 @@ class PineapleAreaScreen extends GetView<PineapleAreaController> {
     );
   }
 
+  /// Builds the sliver app bar.
   _buildAppBar() {
     return PineapleAppBarWidget.buildAppBar(
       backgroundColor: Get.theme.colorScheme.primary,
-      title: PineapleUIModule.MODULE_NAME,
-      urlBackgroundImage: PineapleUIModule.URL_AREA_BACKGROUND,
-    );
-  }
-
-  _buildGridView() {
-    return GridView.count(
-      // Amount of columns.
-      crossAxisCount: 2,
-      // Space beteween the items.
-      crossAxisSpacing: 5,
-      mainAxisSpacing: 5,
-      // The tiles.
-      children: controller
-          .findAll()
-          .map(
-            (areaDomain) => PineapleAreaTile(
-              closeWidget: _buildTileClosed(areaDomain.name),
-              colorPrimary: Get.theme.colorScheme.primary,
-              openWidget: _buildTileOpen(),
-            ),
-          )
-          .toList(),
-    );
-  }
-
-  /// Tile when the list is refreshing.
-  _buildTileRefresh() {
-    return Transform.translate(
-      // So the tiles beggin in the same spot that the real list.
-      offset: const Offset(0.0, -25.0),
-      // Widget that make the shimer efect.
-      child: Shimmer.fromColors(
-        // Color of the tile.
-        baseColor: Colors.grey.shade300,
-        // Color of the shime efect.
-        highlightColor: Get.theme.colorScheme.primary,
-        // If the shimer efect is showing.
-        enabled: controller.isRefreshing,
-        // The Grid.
-        child: GridView.count(
-          // Amount of columns.
-          crossAxisCount: 2,
-          // Space beteween the items.
-          crossAxisSpacing: 5,
-          mainAxisSpacing: 5,
-          // The tiles.
-          children: List.generate(
-            4,
-            (index) => PineapleAreaTile(
-              closeWidget: _buildTileClosed(""),
-              openWidget: _buildTileOpen(),
-            ),
-          ).toList(),
-        ),
-      ),
+      title: "Áreas",
+      urlBackgroundImage: PineapleAssets.AREA_IMAGE,
     );
   }
 
