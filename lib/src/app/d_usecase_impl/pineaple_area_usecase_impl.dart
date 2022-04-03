@@ -63,6 +63,11 @@ class PineapleAreaUseCaseImpl implements PineapleAreaUseCase {
   }
 
   @override
+  List<PineaplePOSDomain> posList(int areaID) {
+    return findBy(areaID).posList;
+  }
+
+  @override
   void init() {
     // TODO: implement init
   }
