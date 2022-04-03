@@ -1,7 +1,9 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pineaple_pos_client/pineaple_exporter.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:skeleton_loader/skeleton_loader.dart';
 
 class PineapleAreaScreen extends GetView<PineapleAreaController> {
 // ignore: constant_identifier_names
@@ -13,25 +15,8 @@ class PineapleAreaScreen extends GetView<PineapleAreaController> {
 
   @override
   Widget build(BuildContext context) {
-    // A controller to controll header and footer state, it can trigger driving request Refresh.
-    RefreshController _refreshController = RefreshController(
-      initialRefresh: false,
-    );
-
     // A key for the refresh Widget.
     GlobalKey _refresherKey = GlobalKey();
-
-    // The function to execute when the user refresh the app.
-    void _onRefresh() async {
-      await Future.delayed(const Duration(milliseconds: 1000));
-      _refreshController.refreshCompleted();
-    }
-
-    // The function to execute when the user load the app.
-    void _onLoading() async {
-      await Future.delayed(const Duration(milliseconds: 250));
-      _refreshController.loadComplete();
-    }
 
     return Scaffold(
       // The background color of the screen.
@@ -43,40 +28,49 @@ class PineapleAreaScreen extends GetView<PineapleAreaController> {
           _buildAppBar(),
         ],
         // Creates a widget to help attach the refresh and load of the content of the app.
-        body: SmartRefresher(
-          // The key of the widget.
-          key: _refresherKey,
-          // Controll the inner state.
-          controller: _refreshController,
-          // This bool will affect whether or not to have the function of drop-down refresh.
-          enablePullDown: true,
-          // Header indicator displace before content.
-          header: WaterDropMaterialHeader(
-            // The color of the header.
-            backgroundColor: Get.theme.colorScheme.secondary,
-            // To prevent the view get out from the sliver app bar.
-            offset: -5,
-          ),
-          // Builds the child to refresh in this case a grid view.
-          child: _buildGridView(),
-          physics: const BouncingScrollPhysics(),
-          // Footer indicator display after content.
-          footer: const ClassicFooter(
-            loadStyle: LoadStyle.ShowWhenLoading,
-            completeDuration: Duration(milliseconds: 500),
-          ),
-          // Callback when header refresh.
-          onRefresh: _onRefresh,
-          // Callback when footer loading more data.
-          onLoading: _onLoading,
-        ),
+        body: GetBuilder<PineapleAreaController>(builder: (_) {
+          // Creates a widget that absorbs pointers during hit testing.
+          return AbsorbPointer(
+            // Don't allow the user to press any widget while this property is in true.
+            absorbing: controller.isRefreshing,
+            child: SmartRefresher(
+              // The key of the widget.
+              key: _refresherKey,
+              // Controll the inner state.
+              controller: controller.refreshController,
+              // This bool will affect whether or not to have the function of drop-down refresh.
+              enablePullDown: true,
+              // Header indicator displace before content.
+              header: WaterDropMaterialHeader(
+                // The color of the header.
+                backgroundColor: Get.theme.colorScheme.primary,
+                // To prevent the view get out from the sliver app bar.
+                offset: -5,
+              ),
+              // Builds the child to refresh in this case a grid view.
+              child: controller.isRefreshing
+                  ? _buildTileRefresh()
+                  : _buildGridView(),
+              physics: const BouncingScrollPhysics(),
+              // Footer indicator display after content.
+              footer: const ClassicFooter(
+                loadStyle: LoadStyle.ShowWhenLoading,
+                completeDuration: Duration(milliseconds: 500),
+              ),
+              // Callback when header refresh.
+              onRefresh: controller.onRefresh,
+              // Callback when footer loading more data.
+              onLoading: controller.onLoading,
+            ),
+          );
+        }),
       ),
     );
   }
 
   _buildAppBar() {
     return PineapleAppBarWidget.buildAppBar(
-      backgroundColor: Get.theme.colorScheme.secondary,
+      backgroundColor: Get.theme.colorScheme.primary,
       title: PineapleUIModule.MODULE_NAME,
       urlBackgroundImage: PineapleUIModule.URL_AREA_BACKGROUND,
     );
@@ -94,13 +88,46 @@ class PineapleAreaScreen extends GetView<PineapleAreaController> {
           .findAll()
           .map(
             (areaDomain) => PineapleAreaTile(
-              singleLevelDomain: areaDomain,
-              buildName: areaDomain.name,
+              closeWidget: _buildTileClosed(areaDomain.name),
               colorPrimary: Get.theme.colorScheme.primary,
-              openWidget: const Text('data'),
+              openWidget: _buildTileOpen(),
             ),
           )
           .toList(),
     );
+  }
+
+  /// Tile when the list is refreshing.
+  _buildTileRefresh() {
+    return SkeletonGridLoader(
+      crossAxisSpacing: 0,
+      mainAxisSpacing: 0,
+      builder: PineapleAreaTile(
+        closeWidget: _buildTileClosed(""),
+        openWidget: _buildTileOpen(),
+      ),
+      items: 4,
+      itemsPerRow: 2,
+      period: const Duration(seconds: 2),
+      highlightColor: Get.theme.colorScheme.primary,
+      direction: SkeletonDirection.ltr,
+      childAspectRatio: 1,
+    );
+  }
+
+  /// Tile when is small that shows a list with all the different areas.
+  _buildTileClosed(String buildName) {
+    return AutoSizeText(
+      buildName,
+      textAlign: TextAlign.center,
+      style: Get.theme.textTheme.headline6?.copyWith(
+        fontSize: Get.size.width / 13,
+      ),
+    );
+  }
+
+  /// The screen to show when the user select one of the small tiles.
+  _buildTileOpen() {
+    return Container();
   }
 }
