@@ -1,10 +1,16 @@
 import 'package:pineaple_pos_client/src/app/pineaple_app_exporter.dart';
 
 class PineaplePOSUseCaseImpl implements PineaplePOSUseCase {
+  /// List with all the areas.
+  List<PineapleAreaDomain> areaList;
+
+  PineaplePOSUseCaseImpl({
+    required this.areaList,
+  });
+
   @override
   int count() {
-    // TODO: implement count
-    throw UnimplementedError();
+    return findAll().length;
   }
 
   @override
@@ -32,14 +38,25 @@ class PineaplePOSUseCaseImpl implements PineaplePOSUseCase {
 
   @override
   List<PineaplePOSDomain> findAll() {
-    // TODO: implement findAll
-    throw UnimplementedError();
+    return [
+      PineaplePOSDomain(id: 1, name: "Mesa 1", area: areaList.elementAt(0)),
+      PineaplePOSDomain(id: 2, name: "Mesa 2", area: areaList.elementAt(0)),
+      PineaplePOSDomain(id: 3, name: "Mesa 3", area: areaList.elementAt(0)),
+      PineaplePOSDomain(id: 4, name: "Mesa 4", area: areaList.elementAt(0)),
+      PineaplePOSDomain(id: 5, name: "Barra", area: areaList.elementAt(1)),
+      PineaplePOSDomain(id: 6, name: "Caja 1", area: areaList.elementAt(2)),
+      PineaplePOSDomain(id: 7, name: "Caja 2", area: areaList.elementAt(2)),
+      PineaplePOSDomain(id: 8, name: "Mesa 1", area: areaList.elementAt(3)),
+      PineaplePOSDomain(id: 9, name: "Mesa 2", area: areaList.elementAt(3)),
+      PineaplePOSDomain(id: 10, name: "Mesa 3", area: areaList.elementAt(3)),
+      PineaplePOSDomain(id: 11, name: "Mesa 4", area: areaList.elementAt(3)),
+      PineaplePOSDomain(id: 12, name: "Mesa 5", area: areaList.elementAt(3)),
+    ];
   }
 
   @override
   PineaplePOSDomain findBy(int keyId) {
-    // TODO: implement findBy
-    throw UnimplementedError();
+    return findAll().firstWhere((element) => element.id == keyId);
   }
 
   @override
