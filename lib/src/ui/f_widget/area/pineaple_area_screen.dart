@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pineaple_pos_client/pineaple_exporter.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:skeleton_loader/skeleton_loader.dart';
+import 'package:shimmer/shimmer.dart';
 
 class PineapleAreaScreen extends GetView<PineapleAreaController> {
 // ignore: constant_identifier_names
@@ -99,19 +99,28 @@ class PineapleAreaScreen extends GetView<PineapleAreaController> {
 
   /// Tile when the list is refreshing.
   _buildTileRefresh() {
-    return SkeletonGridLoader(
-      crossAxisSpacing: 0,
-      mainAxisSpacing: 0,
-      builder: PineapleAreaTile(
-        closeWidget: _buildTileClosed(""),
-        openWidget: _buildTileOpen(),
+    return Transform.translate(
+      offset: const Offset(0.0, -25.0),
+      child: Shimmer.fromColors(
+        baseColor: Colors.grey.shade300,
+        highlightColor: Get.theme.colorScheme.primary,
+        enabled: controller.isRefreshing,
+        child: GridView.count(
+          // Amount of columns.
+          crossAxisCount: 2,
+          // Space beteween the items.
+          crossAxisSpacing: 5,
+          mainAxisSpacing: 5,
+          // The tiles.
+          children: List.generate(
+            4,
+            (index) => PineapleAreaTile(
+              closeWidget: _buildTileClosed(""),
+              openWidget: _buildTileOpen(),
+            ),
+          ).toList(),
+        ),
       ),
-      items: 4,
-      itemsPerRow: 2,
-      period: const Duration(seconds: 2),
-      highlightColor: Get.theme.colorScheme.primary,
-      direction: SkeletonDirection.ltr,
-      childAspectRatio: 1,
     );
   }
 
