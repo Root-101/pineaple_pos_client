@@ -19,6 +19,12 @@ class PineaplePOSControllerImpl extends PineaplePOSController {
     return posUseCase.findAll();
   }
 
+  /// Find all the points of sell that belong to the same area.
+  @override
+  List<PineaplePOSDomain> findByArea(int areaID) {
+    return posUseCase.findByArea(areaID);
+  }
+
   /// The controller of the refresh widget.
   @override
   RefreshController get refreshController => _refreshController;
