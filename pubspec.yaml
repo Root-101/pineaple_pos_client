@@ -17,13 +17,18 @@ dependencies:
 
   # Architecture & Management
   get: ^4.5.1
-  clean_core: ^1.2.3-RELEASE.20220206
+  clean_core:
+    path: ../../clean-core-flutter
+  #clean_core: ^1.2.3-RELEASE.20220206
   auto_size_text: ^3.0.0
 
   #Animations
   animations: ^2.0.2
   pull_to_refresh: ^2.0.0
   shimmer: ^2.0.0
+
+  #REST
+  http: ^0.13.4
 
 dev_dependencies:
   flutter_test:

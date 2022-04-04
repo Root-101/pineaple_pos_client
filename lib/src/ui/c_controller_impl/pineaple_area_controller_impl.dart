@@ -1,9 +1,10 @@
-import 'package:get/get.dart';
 import 'package:pineaple_pos_client/pineaple_exporter.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class PineapleAreaControllerImpl extends PineapleAreaController {
-  final PineapleAreaUseCase areaUseCase = Get.find<PineapleAreaUseCase>();
+  final PineapleAreaUseCase areaUseCase;
+
+  PineapleAreaControllerImpl({required this.areaUseCase});
 
   /// A controller to controll header and footer state, it can trigger driving request Refresh.
   final RefreshController _refreshController = RefreshController(
@@ -12,8 +13,28 @@ class PineapleAreaControllerImpl extends PineapleAreaController {
 
   /// Find all the areas.
   @override
-  List<PineapleAreaDomain> findAll() {
-    return areaUseCase.findAll();
+  Future<List<PineapleAreaDomain>> findAll() async {
+    return await areaUseCase.findAll();
+  }
+
+  Future<PineapleAreaDomain> create(PineapleAreaDomain object) async {
+    return await areaUseCase.create(object);
+  }
+
+  Future<PineapleAreaDomain> destroy(PineapleAreaDomain object) async {
+    return await areaUseCase.destroy(object);
+  }
+
+  Future<PineapleAreaDomain> edit(PineapleAreaDomain object) async {
+    return await areaUseCase.edit(object);
+  }
+
+  Future<PineapleAreaDomain> findBy(int id) async {
+    return await areaUseCase.findBy(id);
+  }
+
+  Future<int> count() async {
+    return await areaUseCase.count();
   }
 
   /// The controller of the refresh widget.
