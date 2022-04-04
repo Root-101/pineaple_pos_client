@@ -39,7 +39,7 @@ class PineaplePOSScreen extends GetView<PineaplePOSController> {
           _buildAppBar(),
         ],
         // Creates a widget to help attach the refresh and load of the content of the app.
-        body: GetBuilder<PineapleAreaController>(builder: (_) {
+        body: GetBuilder<PineaplePOSController>(builder: (_) {
           // Creates a widget that absorbs pointers during hit testing.
           return PineapleRefreshWidget.buildRefreshWidget(
             refreshKey: _refreshPOSKey,
