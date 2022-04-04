@@ -14,8 +14,18 @@ class ConsumeRESTCRUDTemplate<Entity extends BasicEntityObject>
 
   @override
   Future<List<Entity>> findAll() async {
-    String json = await http.read(Uri.parse("$urlGeneral/find_all"));
+    String json = await http.read(
+      Uri.parse("$urlGeneral/find_all"),
+      headers: _headers,
+    );
     return converter.fromJSONAllString(json);
+  }
+
+  @override
+  Future<Entity> findBy(int keyId) async {
+    String json = await http.read(Uri.parse("$urlGeneral/find_by/$keyId"),
+        headers: _headers);
+    return converter.fromJSONString(json);
   }
 
   @override
@@ -23,6 +33,18 @@ class ConsumeRESTCRUDTemplate<Entity extends BasicEntityObject>
     String body = converter.toJSONString(newObject);
     String jsonBody = (await http.post(
       Uri.parse("$urlGeneral/create"),
+      body: body,
+      headers: _headers,
+    ))
+        .body;
+    return converter.fromJSONString(jsonBody);
+  }
+
+  @override
+  Future<Entity> edit(Entity objectToEdit) async {
+    String body = converter.toJSONString(objectToEdit);
+    String jsonBody = (await http.post(
+      Uri.parse("$urlGeneral/edit"),
       body: body,
       headers: _headers,
     ))
@@ -41,35 +63,18 @@ class ConsumeRESTCRUDTemplate<Entity extends BasicEntityObject>
   }
 
   @override
-  Future<Entity> edit(Entity objectToEdit) async {
-    String body = converter.toJSONString(objectToEdit);
-    String jsonBody = (await http.post(
-      Uri.parse("$urlGeneral/edit"),
-      body: body,
-      headers: _headers,
-    ))
-        .body;
-    return converter.fromJSONString(jsonBody);
-  }
-
-  @override
-  Future<Entity> findBy(int keyId) async {
-    String json = await http.read(Uri.parse("$urlGeneral/find_by/$keyId"));
-    return converter.fromJSONString(json);
-  }
-
-  @override
-  Future<int> count() async {
-    String json = await http.read(Uri.parse("$urlGeneral/count"));
-    return int.parse(json);
-  }
-
-  @override
   Future<void> destroyById(int id) async {
     await http.post(
       Uri.parse("$urlGeneral/destroy_id"),
       body: "$id",
       headers: _headers,
     );
+  }
+
+  @override
+  Future<int> count() async {
+    String json =
+        await http.read(Uri.parse("$urlGeneral/count"), headers: _headers);
+    return int.parse(json);
   }
 }

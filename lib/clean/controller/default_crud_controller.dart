@@ -1,5 +1,5 @@
 import 'package:clean_core/clean_core.dart';
-import 'package:pineaple_pos_client/src/ui/b_controller/crud_controller.dart';
+import 'package:pineaple_pos_client/clean/controller/crud_controller.dart';
 
 abstract class DefaultCRUDUseCase<Domain extends BasicDomainObject,
     UseCase extends CRUDUseCase<Domain>> extends CRUDController<Domain> {

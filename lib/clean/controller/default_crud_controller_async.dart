@@ -1,5 +1,5 @@
 import 'package:clean_core/clean_core.dart';
-import 'package:pineaple_pos_client/src/ui/b_controller/crud_controller_async.dart';
+import 'package:pineaple_pos_client/clean/controller/crud_controller_async.dart';
 
 abstract class DefaultCRUDControllerAsync<Domain extends BasicDomainObject,
         UseCase extends CRUDUseCaseAsync<Domain>>

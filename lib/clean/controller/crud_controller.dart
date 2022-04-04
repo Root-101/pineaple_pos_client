@@ -1,5 +1,5 @@
 import 'package:clean_core/clean_core.dart';
-import 'package:pineaple_pos_client/src/ui/b_controller/abstract_controller.dart';
+import 'package:pineaple_pos_client/clean/controller/abstract_controller.dart';
 
 abstract class CRUDController<Domain extends BasicDomainObject>
     extends AbstractController {

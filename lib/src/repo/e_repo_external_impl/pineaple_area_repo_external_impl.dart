@@ -1,7 +1,6 @@
 import 'package:clean_core/clean_core.dart';
+import 'package:pineaple_pos_client/clean/rest/consume_rest_crud_template.dart';
 import 'package:pineaple_pos_client/pineaple_exporter.dart';
-
-import 'consume_rest_crud_template.dart';
 
 class PineapleAreaRepoExternalImpl
     extends ConsumeRESTCRUDTemplate<PineapleAreaEntity>
