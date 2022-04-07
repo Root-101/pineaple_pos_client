@@ -7,19 +7,19 @@ class PineaplePOSScreen extends GetView<PineaplePOSController> {
 // ignore: constant_identifier_names
   static const ROUTE_NAME = "/pineaple-pos-screen";
 
-  final int areaID;
+  final PineapleAreaDomain areaDomain;
 
   PineaplePOSScreen({
-    required List<PineapleAreaDomain> areaList,
-    required this.areaID,
+    required this.areaDomain,
     Key? key,
   }) : super(key: key) {
     //clear the controller before start
     Get.delete<PineaplePOSController>();
+
     //set up the new controller
     Get.put<PineaplePOSController>(
       PineaplePOSControllerImpl(
-        areaList: areaList,
+        posUseCase: Get.find<PineaplePOSUseCase>(),
       ),
     );
   }
@@ -55,7 +55,7 @@ class PineaplePOSScreen extends GetView<PineaplePOSController> {
             ),
             gridView: PineapleRefreshWidget.buildGridView(
               children: controller
-                  .findByArea(areaID)
+                  .findByArea(areaDomain)
                   .map(
                     (posDomain) => PineapleOpenContainerWidget(
                       closeWidget: _buildTileClosed(posDomain.name),

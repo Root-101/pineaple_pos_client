@@ -1,21 +1,21 @@
 import 'package:clean_core/clean_core.dart';
 import 'package:pineaple_pos_client/pineaple_exporter.dart';
 
-class PineaplePOSDomain extends BasicDomainObject<PineaplePOSDomain> {
+class PineaplePosDomain extends BasicDomainObject<PineaplePosDomain> {
   @override
   int id;
   final String name;
   final PineapleAreaDomain area;
 
-  PineaplePOSDomain({
+  PineaplePosDomain({
     required this.id,
     required this.name,
     required this.area,
   });
 
   @override
-  PineaplePOSDomain clone() {
-    return PineaplePOSDomain(
+  PineaplePosDomain clone() {
+    return PineaplePosDomain(
       id: id,
       name: name,
       area: area,

@@ -1,63 +1,51 @@
+import 'package:pineaple_pos_client/clean/controller/default_crud_controller_async.dart';
 import 'package:pineaple_pos_client/pineaple_exporter.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-class PineapleAreaControllerImpl extends PineapleAreaController {
-  final PineapleAreaUseCase areaUseCase;
+class PineapleAreaControllerImpl
+    extends DefaultCRUDControllerAsync<PineapleAreaDomain, PineapleAreaUseCase>
+    implements PineapleAreaController {
+  PineapleAreaControllerImpl({required PineapleAreaUseCase areaUseCase})
+      : super(useCase: areaUseCase);
 
-  PineapleAreaControllerImpl({required this.areaUseCase});
+  //store the loaded elements in the list
+  //to be able to call it with out the future in findAll
+  @override
+  List<PineapleAreaDomain> findAllLoaded = [];
+
+  //store the current count of the list
+  //for use it in the amount of shined tiles
+  @override
+  int loadedCount = 0;
 
   /// A controller to controll header and footer state, it can trigger driving request Refresh.
-  final RefreshController _refreshController = RefreshController(
-    initialRefresh: false,
+  @override
+  final RefreshController refreshController = RefreshController(
+    initialRefresh: true,
   );
-
-  /// Find all the areas.
-  @override
-  Future<List<PineapleAreaDomain>> findAll() async {
-    return await areaUseCase.findAll();
-  }
-
-  Future<PineapleAreaDomain> create(PineapleAreaDomain object) async {
-    return await areaUseCase.create(object);
-  }
-
-  Future<PineapleAreaDomain> destroy(PineapleAreaDomain object) async {
-    return await areaUseCase.destroy(object);
-  }
-
-  Future<PineapleAreaDomain> edit(PineapleAreaDomain object) async {
-    return await areaUseCase.edit(object);
-  }
-
-  Future<PineapleAreaDomain> findBy(int id) async {
-    return await areaUseCase.findBy(id);
-  }
-
-  Future<int> count() async {
-    return await areaUseCase.count();
-  }
-
-  /// The controller of the refresh widget.
-  @override
-  RefreshController get refreshController => _refreshController;
 
   /// Boolean to control if the app is refreshing.
   @override
-  bool get isRefreshing => _refreshController.isRefresh;
+  bool get isRefreshing => refreshController.isRefresh;
 
   /// The function to execute when the user refresh the app.
   @override
-  void onRefresh() async {
-    update();
+  Future<void> onRefresh() async {
+    update(); //update si the shine change
+
+    findAllLoaded = await useCase.findAll(); //store the list
+    loadedCount = findAllLoaded.length; //store the amounts of tiles
+
     await Future.delayed(const Duration(milliseconds: 3000));
-    _refreshController.refreshCompleted();
-    update();
+
+    refreshController.refreshCompleted();
+    update(); //actualiza con la lista de verdad
   }
 
   /// The function to execute when the user load the app.
   @override
-  void onLoading() async {
+  Future<void> onLoading() async {
     await Future.delayed(const Duration(milliseconds: 250));
-    _refreshController.loadComplete();
+    refreshController.loadComplete();
   }
 }
