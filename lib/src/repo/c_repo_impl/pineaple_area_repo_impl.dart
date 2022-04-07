@@ -1,14 +1,10 @@
 import 'package:clean_core/clean_core.dart';
 import 'package:pineaple_pos_client/pineaple_exporter.dart';
 
-class PineapleAreaRepoImpl
-    extends DefaultCRUDRepoAsync<PineapleAreaDomain, PineapleAreaEntity>
-    implements PineapleAreaRepo {
-  PineapleAreaRepoExternal _externalRepo;
-
+class PineapleAreaRepoImpl extends DefaultCRUDRepoAsync<PineapleAreaDomain,
+    PineapleAreaEntity, PineapleAreaRepoExternal> implements PineapleAreaRepo {
   PineapleAreaRepoImpl({required PineapleAreaRepoExternal repoExternal})
-      : _externalRepo = repoExternal,
-        super(
+      : super(
             externalRepo: repoExternal,
             converter: PineapleAreaConverter.converter);
 }

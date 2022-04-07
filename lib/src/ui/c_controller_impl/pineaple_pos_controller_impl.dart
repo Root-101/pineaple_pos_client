@@ -15,13 +15,13 @@ class PineaplePOSControllerImpl extends PineaplePOSController {
 
   /// Find all the areas.
   @override
-  List<PineaplePOSDomain> findAll() {
+  List<PineaplePosDomain> findAll() {
     return posUseCase.findAll();
   }
 
   /// Find all the points of sell that belong to the same area.
   @override
-  List<PineaplePOSDomain> findByArea(int areaID) {
+  List<PineaplePosDomain> findByArea(int areaID) {
     return posUseCase.findByArea(areaID);
   }
 
