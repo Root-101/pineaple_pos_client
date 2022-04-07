@@ -1,13 +1,16 @@
-import 'package:pineaple_pos_client/clean/controller/clean_controller_exporter.dart';
-import 'package:pineaple_pos_client/src/app/pineaple_app_exporter.dart';
+import 'package:clean_core/clean_core.dart';
+import 'package:get/get.dart';
+import 'package:pineaple_pos_client/pineaple_exporter.dart';
 
-class PineaplePOSUseCaseImpl extends DefaultCRUDUseCase implements PineaplePOSUseCase {
-
-  PineaplePOSUseCaseImpl({
-  });
+class PineaplePOSUseCaseImpl
+    extends DefaultCRUDUseCaseAsync<PineaplePosDomain, PineaplePosRepo>
+    implements PineaplePOSUseCase {
+  PineaplePOSUseCaseImpl(PineaplePosRepo repo) : super(repo: repo);
 
   @override
-  List<PineaplePosDomain> findAll() {
+  Future<List<PineaplePosDomain>> findAll() async {
+    List<PineapleAreaDomain> areaList =
+        await Get.find<PineapleAreaUseCase>().findAll();
     return [
       PineaplePosDomain(id: 1, name: "Mesa 1", area: areaList.elementAt(0)),
       PineaplePosDomain(id: 2, name: "Mesa 2", area: areaList.elementAt(0)),
@@ -25,7 +28,25 @@ class PineaplePOSUseCaseImpl extends DefaultCRUDUseCase implements PineaplePOSUs
   }
 
   @override
-  List<PineaplePosDomain> findByArea(int areaID) {
-    return findAll().where((element) => element.area.id == areaID).toList();
+  Future<List<PineaplePosDomain>> findByArea(
+      PineapleAreaDomain areaDomain) async {
+    return findByAreaId(areaDomain.id);
+  }
+
+  @override
+  Future<List<PineaplePosDomain>> findByAreaId(int areaID) async {
+    return findByAreaIdCache(await findAll(), areaID);
+  }
+
+  @override
+  List<PineaplePosDomain> findByAreaCache(
+      List<PineaplePosDomain> posList, PineapleAreaDomain areaDomain) {
+    return findByAreaIdCache(posList, areaDomain.id);
+  }
+
+  @override
+  List<PineaplePosDomain> findByAreaIdCache(
+      List<PineaplePosDomain> posList, int areaId) {
+    return posList.where((element) => element.area.id == areaId).toList();
   }
 }

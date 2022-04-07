@@ -1,51 +1,58 @@
+import 'package:get/get.dart';
+import 'package:pineaple_pos_client/clean/controller/default_crud_controller_async.dart';
 import 'package:pineaple_pos_client/pineaple_exporter.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-class PineaplePOSControllerImpl extends PineaplePOSController {
-  final PineaplePOSUseCase posUseCase;
-
+class PineaplePOSControllerImpl
+    extends DefaultCRUDControllerAsync<PineaplePosDomain, PineaplePOSUseCase>
+    implements PineaplePOSController {
   PineaplePOSControllerImpl({
-    required List<PineapleAreaDomain> areaList,
-  }) : posUseCase = PineaplePOSUseCaseImpl(areaList: areaList);
+    required PineaplePOSUseCase posUseCase,
+  }) : super(useCase: posUseCase);
 
   /// A controller to controll header and footer state, it can trigger driving request Refresh.
-  final RefreshController _refreshController = RefreshController(
-    initialRefresh: false,
+  @override
+  final RefreshController refreshController = RefreshController(
+    initialRefresh: true,
   );
 
-  /// Find all the areas.
+  //store the loaded elements in the list
+  //to be able to call it with out the future in findAll
   @override
-  List<PineaplePosDomain> findAll() {
-    return posUseCase.findAll();
-  }
+  List<PineaplePosDomain> findAllLoaded = [];
 
-  /// Find all the points of sell that belong to the same area.
+  //store the current count of the list
+  //for use it in the amount of shined tiles
   @override
-  List<PineaplePosDomain> findByArea(int areaID) {
-    return posUseCase.findByArea(areaID);
-  }
-
-  /// The controller of the refresh widget.
-  @override
-  RefreshController get refreshController => _refreshController;
+  int loadedCount = 0;
 
   /// Boolean to control if the app is refreshing.
   @override
-  bool get isRefreshing => _refreshController.isRefresh;
+  bool get isRefreshing => refreshController.isRefresh;
 
   /// The function to execute when the user refresh the app.
   @override
-  void onRefresh() async {
-    update();
+  Future<void> onRefresh() async {
+    update(); //update si the shine change
+
+    findAllLoaded = await useCase.findAll(); //store the list
+    loadedCount = findAllLoaded.length; //store the amounts of tiles
+
     await Future.delayed(const Duration(milliseconds: 3000));
-    _refreshController.refreshCompleted();
-    update();
+
+    refreshController.refreshCompleted();
+    update(); //actualiza con la lista de verdad
   }
 
   /// The function to execute when the user load the app.
   @override
-  void onLoading() async {
+  Future<void> onLoading() async {
     await Future.delayed(const Duration(milliseconds: 250));
-    _refreshController.loadComplete();
+    refreshController.loadComplete();
+  }
+
+  List<PineaplePosDomain> findByArea(PineapleAreaDomain areaDomain) {
+    return Get.find<PineaplePOSUseCase>()
+        .findByAreaCache(findAllLoaded, areaDomain);
   }
 }

@@ -6,6 +6,9 @@ class PineapleRepoModule {
     Get.put<PineapleAreaRepo>(
       PineapleAreaRepoImpl(repoExternal: PineapleAreaRepoExternalImpl()),
     );
+    Get.put<PineaplePosRepo>(
+      PineaplePosRepoImpl(repoExternal: PineaplePosExternalImpl()),
+    );
     return true;
   }
 }

@@ -2,10 +2,9 @@ import 'package:clean_core/clean_core.dart';
 import 'package:pineaple_pos_client/clean/rest/consume_rest_crud_template.dart';
 import 'package:pineaple_pos_client/pineaple_exporter.dart';
 
-class PineapleAreaPosExternalImpl
-    extends ConsumeRESTCRUDTemplate<PineaplePosEntity>
+class PineaplePosExternalImpl extends ConsumeRESTCRUDTemplate<PineaplePosEntity>
     implements PineaplePosRepoExternal {
-  PineapleAreaPosExternalImpl()
+  PineaplePosExternalImpl()
       : super(
           urlGeneral: "http://10.0.2.2:8080/pos/pos",
           converter: PosJSONConverter.converter,
