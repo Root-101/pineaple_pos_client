@@ -2,7 +2,7 @@ import 'package:pineaple_pos_client/clean/controller/crud_controller_async.dart'
 import 'package:pineaple_pos_client/src/app/pineaple_app_exporter.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-abstract class PineaplePOSController
+abstract class PineaplePosController
     extends CRUDControllerAsync<PineaplePosDomain> {
   List<PineaplePosDomain> get findAllLoaded;
 

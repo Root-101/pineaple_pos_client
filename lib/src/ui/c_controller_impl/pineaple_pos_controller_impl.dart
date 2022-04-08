@@ -3,11 +3,11 @@ import 'package:pineaple_pos_client/clean/controller/default_crud_controller_asy
 import 'package:pineaple_pos_client/pineaple_exporter.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-class PineaplePOSControllerImpl
-    extends DefaultCRUDControllerAsync<PineaplePosDomain, PineaplePOSUseCase>
-    implements PineaplePOSController {
-  PineaplePOSControllerImpl({
-    required PineaplePOSUseCase posUseCase,
+class PineaplePosControllerImpl
+    extends DefaultCRUDControllerAsync<PineaplePosDomain, PineaplePosUseCase>
+    implements PineaplePosController {
+  PineaplePosControllerImpl({
+    required PineaplePosUseCase posUseCase,
   }) : super(useCase: posUseCase);
 
   /// A controller to controll header and footer state, it can trigger driving request Refresh.
@@ -52,7 +52,7 @@ class PineaplePOSControllerImpl
   }
 
   List<PineaplePosDomain> findByArea(PineapleAreaDomain areaDomain) {
-    return Get.find<PineaplePOSUseCase>()
+    return Get.find<PineaplePosUseCase>()
         .findByAreaCache(findAllLoaded, areaDomain);
   }
 }

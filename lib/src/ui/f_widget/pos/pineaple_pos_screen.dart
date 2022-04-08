@@ -3,23 +3,23 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pineaple_pos_client/pineaple_exporter.dart';
 
-class PineaplePOSScreen extends GetView<PineaplePOSController> {
+class PineaplePosScreen extends GetView<PineaplePosController> {
 // ignore: constant_identifier_names
   static const ROUTE_NAME = "/pineaple-pos-screen";
 
   final PineapleAreaDomain areaDomain;
 
-  PineaplePOSScreen({
+  PineaplePosScreen({
     required this.areaDomain,
     Key? key,
   }) : super(key: key) {
     //clear the controller before start
-    Get.delete<PineaplePOSController>();
+    Get.delete<PineaplePosController>();
 
     //set up the new controller
-    Get.put<PineaplePOSController>(
-      PineaplePOSControllerImpl(
-        posUseCase: Get.find<PineaplePOSUseCase>(),
+    Get.put<PineaplePosController>(
+      PineaplePosControllerImpl(
+        posUseCase: Get.find<PineaplePosUseCase>(),
       ),
     );
   }
@@ -27,7 +27,7 @@ class PineaplePOSScreen extends GetView<PineaplePOSController> {
   @override
   Widget build(BuildContext context) {
     // A key for the refresh Widget.
-    GlobalKey _refreshPOSKey = GlobalKey();
+    GlobalKey _refreshPosKey = GlobalKey();
 
     return Scaffold(
       // The background color of the screen.
@@ -39,10 +39,10 @@ class PineaplePOSScreen extends GetView<PineaplePOSController> {
           _buildAppBar(),
         ],
         // Creates a widget to help attach the refresh and load of the content of the app.
-        body: GetBuilder<PineaplePOSController>(builder: (_) {
+        body: GetBuilder<PineaplePosController>(builder: (_) {
           // Creates a widget that absorbs pointers during hit testing.
           return PineapleRefreshWidget.buildRefreshWidget(
-            refreshKey: _refreshPOSKey,
+            refreshKey: _refreshPosKey,
             isRefreshing: controller.isRefreshing,
             refreshController: controller.refreshController,
             onRefresh: controller.onRefresh,

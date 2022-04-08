@@ -1,7 +1,7 @@
 import 'package:clean_core/clean_core.dart';
 import 'package:pineaple_pos_client/src/app/pineaple_app_exporter.dart';
 
-abstract class PineaplePOSUseCase extends CRUDUseCaseAsync<PineaplePosDomain> {
+abstract class PineaplePosUseCase extends CRUDUseCaseAsync<PineaplePosDomain> {
   Future<List<PineaplePosDomain>> findByAreaId(int areaId);
 
   Future<List<PineaplePosDomain>> findByArea(PineapleAreaDomain areaDomain);

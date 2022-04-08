@@ -2,10 +2,10 @@ import 'package:clean_core/clean_core.dart';
 import 'package:get/get.dart';
 import 'package:pineaple_pos_client/pineaple_exporter.dart';
 
-class PineaplePOSUseCaseImpl
+class PineaplePosUseCaseImpl
     extends DefaultCRUDUseCaseAsync<PineaplePosDomain, PineaplePosRepo>
-    implements PineaplePOSUseCase {
-  PineaplePOSUseCaseImpl(PineaplePosRepo repo) : super(repo: repo);
+    implements PineaplePosUseCase {
+  PineaplePosUseCaseImpl(PineaplePosRepo repo) : super(repo: repo);
 
   @override
   Future<List<PineaplePosDomain>> findAll() async {

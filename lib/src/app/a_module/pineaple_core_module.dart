@@ -10,8 +10,8 @@ class PineapleCoreModule {
         Get.find<PineapleAreaRepo>(),
       ),
     );
-    Get.put<PineaplePOSUseCase>(
-      PineaplePOSUseCaseImpl(
+    Get.put<PineaplePosUseCase>(
+      PineaplePosUseCaseImpl(
         Get.find<PineaplePosRepo>(),
       ),
     );

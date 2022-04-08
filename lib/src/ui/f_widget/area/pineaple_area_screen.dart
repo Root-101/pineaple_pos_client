@@ -79,7 +79,7 @@ class PineapleAreaScreen extends GetView<PineapleAreaController> {
 
   /// The screen to show when the user select one of the small tiles.
   _buildTileOpen(PineapleAreaDomain areaDomain) {
-    return PineaplePOSScreen(
+    return PineaplePosScreen(
       areaDomain: areaDomain,
     );
   }
